@@ -1,0 +1,16 @@
+{
+    "name": "General.Editor",
+    "references": [
+        "GUID:d079fb606baa43f419442c30dc19dfcd",
+        "GUID:b0b0b966b40f10744be6b5bde5c05f1a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
