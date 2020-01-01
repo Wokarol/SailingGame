@@ -64,6 +64,8 @@ public class ConfigurationWindow : EditorWindow
     private int selectedConfiguration;
     private Vector2 scrollPosition;
     private bool showEmpty = true;
+    private List<Type> configurationTypes;
+    bool dirty = true;
 
     [MenuItem("Window/Configuration")]
     static void Init()
@@ -76,18 +78,17 @@ public class ConfigurationWindow : EditorWindow
     private void OnGUI()
     {
         GUILayout.Label("Select Configuration", EditorStyles.largeLabel);
-        var configurationTypes = typeof(Configuration).Assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(Configuration))).ToArray();
 
-        if (showEmpty) {
-            configurationTypes = configurationTypes.Where(t => (Configuration.ConfigurationLibrary.ContainsKey(t) && Configuration.ConfigurationLibrary[t] != null) || Configuration.GetFromResources(t) != null).ToArray();
+        if (dirty || configurationTypes == null) {
+            RecreateTypes();
         }
 
         selectedConfiguration = GUILayout.SelectionGrid(selectedConfiguration, configurationTypes.Select(c => GetTypeName(c)).ToArray(), 5);
-        selectedConfiguration = Mathf.Clamp(selectedConfiguration, 0, configurationTypes.Length);
+        selectedConfiguration = Mathf.Clamp(selectedConfiguration, 0, configurationTypes.Count);
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
-        if (configurationTypes.Length == 0) return;
+        if (configurationTypes.Count == 0) return;
 
         Configuration selectedConfig;
         Type type = configurationTypes[selectedConfiguration];
@@ -128,11 +129,33 @@ public class ConfigurationWindow : EditorWindow
         }
     }
 
+    private void RecreateTypes()
+    {
+        configurationTypes = new List<Type>();
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            foreach (var t in assembly.GetTypes()) {
+                if (t.IsSubclassOf(typeof(Configuration))) {
+                    configurationTypes.Add(t);
+                }
+            }
+        }
+
+        if (showEmpty) {
+            configurationTypes = configurationTypes.Where(t => (Configuration.ConfigurationLibrary.ContainsKey(t) && Configuration.ConfigurationLibrary[t] != null) || Configuration.GetFromResources(t) != null).ToList();
+        }
+
+        dirty = false;
+    }
+
     private void ShowButton(Rect rect)
     {
         rect.x += 4;
         rect.y += 4;
+        bool last = showEmpty;
         showEmpty = !GUI.Toggle(rect, !showEmpty, GUIContent.none, "CircularToggle");
+        if(showEmpty != last) {
+            dirty = true;
+        }
     }
 
     private static void CreateAssetFrom(ScriptableObject configuration)

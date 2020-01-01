@@ -7,6 +7,9 @@ public class MainMenuUIDirector : MonoBehaviour
 {
     [SerializeField] private Button playButton = null;
     [SerializeField] private Button quitButton = null;
+    [Space]
+    [SerializeField] private ScenesConfig.SceneID gameScene = ScenesConfig.SceneID.MainGame;
+
 
     private void Start()
     {
@@ -16,7 +19,7 @@ public class MainMenuUIDirector : MonoBehaviour
 
     private void OnPlayPressed()
     {
-        Debug.Log("I'm dummy message for when play button is pressed");
+        Configuration.Get<ScenesConfig>().SwitchSceneTo(gameScene);
     }
 
     public void OnQuitPressed()
