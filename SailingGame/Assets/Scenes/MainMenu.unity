@@ -450,6 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playButton: {fileID: 1418926698}
   quitButton: {fileID: 684011380}
+  gameScene: 1
 --- !u!1 &1254189198
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +555,7 @@ RectTransform:
   m_Father: {fileID: 1014875490}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.3, y: 0.74}
+  m_AnchorMin: {x: 0.2, y: 0.74}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -30, y: -30}
   m_SizeDelta: {x: -60, y: -60}
@@ -918,7 +919,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[NOT YET NAMED]'
+  m_text: UNTITLED SHIP GAME
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: dc222e26f56938c458db1bff79bdba70, type: 2}
@@ -946,7 +947,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 315.25
+  m_fontSize: 295.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -987,7 +988,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1961422557}
-    characterCount: 15
+    characterCount: 18
     spriteCount: 0
     spaceCount: 2
     wordCount: 3
@@ -1076,7 +1077,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Made by Wokarol
 
-    v0.0.0b0'
+    v0.0.0b9'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
