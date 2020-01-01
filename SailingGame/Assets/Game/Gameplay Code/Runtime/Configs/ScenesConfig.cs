@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ScenesConfig : Configuration
+public class ScenesConfig : Configuration<ScenesConfig>
 {
     public enum SceneID
     {

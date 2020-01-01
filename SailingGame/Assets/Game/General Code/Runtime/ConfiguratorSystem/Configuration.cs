@@ -10,6 +10,12 @@ using System.IO;
 using UnityEditor;
 #endif
 
+/// <typeparam name="MyT">Configuartion's type, used for shortcuts</typeparam>
+public abstract class Configuration<MyT> : Configuration where MyT : Configuration<MyT>, new()
+{
+    public static MyT Instance => Get<MyT>();
+}
+
 public abstract class Configuration : ScriptableObject
 {
     // Static stuff

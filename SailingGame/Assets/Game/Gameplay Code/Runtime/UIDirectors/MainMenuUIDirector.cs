@@ -19,7 +19,7 @@ public class MainMenuUIDirector : MonoBehaviour
 
     private void OnPlayPressed()
     {
-        Configuration.Get<ScenesConfig>().SwitchSceneTo(gameScene);
+        ScenesConfig.Instance.SwitchSceneTo(gameScene);
     }
 
     public void OnQuitPressed()
