@@ -51,7 +51,9 @@ public class InfoBoxTextReplacer : MonoBehaviour
             .Replace(VersionTag, "__.__.__")
             .Replace(HashTag, "b5ff5f2574a503452e32737a4d116aa16b0808f2");
 #else
-        return pattern;
+        return pattern
+            .Replace(VersionTag, VersionData.Version)
+            .Replace(HashTag, VersionData.Hash);
 #endif
     }
 }
