@@ -51,7 +51,7 @@ public abstract class Configuration : ScriptableObject
         } else return null;
     }
 
-    static string ParseToNiceName(string name)
+    internal static string ParseToNiceName(string name)
     {
         name = Regex.Replace(name, @"<(\w+)>k__BackingField", @"$1");
         name = Regex.Replace(name, @"^[a-z]", m => m.ToString().ToUpper());
@@ -129,7 +129,7 @@ public class ConfigurationWindow : EditorWindow
             EditorGUILayout.HelpBox("No configuration of this type was found", MessageType.Warning);
             if (GUILayout.Button("Create new")) {
                 var configuration = CreateInstance(type);
-                configuration.name = ParseToNiceName(type.Name);
+                configuration.name = Configuration.ParseToNiceName(type.Name);
                 CreateAssetFrom(configuration);
             }
         }
@@ -140,7 +140,7 @@ public class ConfigurationWindow : EditorWindow
         configurationTypes = new List<Type>();
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
             foreach (var t in assembly.GetTypes()) {
-                if (t.IsSubclassOf(typeof(Configuration))) {
+                if (!t.IsAbstract && t.IsSubclassOf(typeof(Configuration))) {
                     configurationTypes.Add(t);
                 }
             }
@@ -171,16 +171,6 @@ public class ConfigurationWindow : EditorWindow
             Directory.CreateDirectory(path);
         }
         AssetDatabase.CreateAsset(configuration, $"Assets/Resources/_Configuration/{configuration.name}.asset");
-    }
-
-    static string ParseToNiceName(string name)
-    {
-        name = Regex.Replace(name, @"<(\w+)>k__BackingField", @"$1");
-        name = Regex.Replace(name, @"^[a-z]", m => m.ToString().ToUpper());
-        name = Regex.Replace(name, @"([a-z])([A-Z])", @"$1 $2");
-        name = Regex.Replace(name, @"([a-zA-Z])(\d)", @"$1 $2");
-        name = Regex.Replace(name, @"(\d)([a-zA-Z])", @"$1 $2");
-        return name;
     }
 
     private string GetTypeName(Type type)
