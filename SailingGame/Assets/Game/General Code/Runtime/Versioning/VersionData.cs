@@ -6,6 +6,7 @@ public static class VersionData
 {
     private const string FileName = "Version.json";
 
+    // Holds data, have to be used because of serialization
     [System.Serializable]
     class VersionDataHolder
     {
@@ -18,6 +19,7 @@ public static class VersionData
     public static string Version => data.Version;
     public static string Hash => data.Hash;
 
+    // Loads data or creates it directly from it when game starts
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
     public static void DeserializeOnAppStat()
     {
