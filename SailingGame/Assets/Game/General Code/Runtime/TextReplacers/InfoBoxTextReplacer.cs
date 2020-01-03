@@ -33,20 +33,25 @@ public class InfoBoxTextReplacer : MonoBehaviour
         UpdateText();
     }
 
+    private void Awake()
+    {
+        UpdateText();
+    }
+
     private void UpdateText()
     {
         var box = Box;
-        box.text = Application.isPlaying
-            ? InjectApplicationData(pattern)
-            : InjectPlaceholders(pattern);
+        box.text = InjectData(pattern);
     }
 
-    private string InjectPlaceholders(string p)
+    public string InjectData(string pattern)
     {
-        return p
+#if UNITY_EDITOR
+        return pattern
             .Replace(VersionTag, "__.__.__")
             .Replace(HashTag, "b5ff5f2574a503452e32737a4d116aa16b0808f2");
+#else
+        return pattern;
+#endif
     }
-
-    private string InjectApplicationData(string pattern) => throw new NotImplementedException();
 }
