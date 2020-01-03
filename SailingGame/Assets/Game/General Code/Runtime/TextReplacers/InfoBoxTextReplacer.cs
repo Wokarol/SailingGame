@@ -1,34 +1,52 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TMP_Text))]
-[ExecuteAlways]
 public class InfoBoxTextReplacer : MonoBehaviour
 {
-    private const string VersionTag = "{VERSION}";
+    private const string VersionTag = "{v}";
+    private const string HashTag = "{hash}";
 
-    [SerializeField, TextArea(3, 8)]
-    [NaughtyAttributes.InfoBox(
-        "You can use tags to replace text with global values\n" 
-        + VersionTag + " = Application.version")]
-    private string format = "";
+    private const string PatternDescription = "You can use tags to replace text with global values\n"
+            + VersionTag + " = Application's version\n"
+            + HashTag + " = Hash ID of application";
+
+    [SerializeField, TextArea(3, 8), NaughtyAttributes.InfoBox(PatternDescription)]
+    private string pattern = "";
 
     private TMP_Text box = null;
-    
-    private TMP_Text GetBox()
-    {
-        if (!box) {
-            box = GetComponent<TMP_Text>();
+
+    private TMP_Text Box {
+        get {
+            if (!box) {
+                box = GetComponent<TMP_Text>();
+            }
+            return box;
         }
-        return box;
     }
 
-    private void Update()
+    private void OnValidate()
     {
-        var box = GetBox();
-        box.text = format
-            .Replace(VersionTag, Application.version);
+        UpdateText();
     }
+
+    private void UpdateText()
+    {
+        var box = Box;
+        box.text = Application.isPlaying
+            ? InjectApplicationData(pattern)
+            : InjectPlaceholders(pattern);
+    }
+
+    private string InjectPlaceholders(string p)
+    {
+        return p
+            .Replace(VersionTag, "__.__.__")
+            .Replace(HashTag, "b5ff5f2574a503452e32737a4d116aa16b0808f2");
+    }
+
+    private string InjectApplicationData(string pattern) => throw new NotImplementedException();
 }
