@@ -46,14 +46,12 @@ public class InfoBoxTextReplacer : MonoBehaviour
 
     public string InjectData(string pattern)
     {
-#if UNITY_EDITOR
-        return pattern
-            .Replace(VersionTag, "__.__.__")
-            .Replace(HashTag, "b5ff5f2574a503452e32737a4d116aa16b0808f2");
-#else
-        return pattern
-            .Replace(VersionTag, VersionData.Version)
-            .Replace(HashTag, VersionData.Hash);
-#endif
+        return Application.isPlaying
+            ? pattern
+                .Replace(VersionTag, VersionData.Version)
+                .Replace(HashTag, VersionData.Hash)
+            : pattern
+                .Replace(VersionTag, "__.__.__")
+                .Replace(HashTag, "b5ff5f2574a503452e32737a4d116aa16b0808f2");
     }
 }

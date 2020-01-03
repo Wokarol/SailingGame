@@ -21,9 +21,11 @@ public static class VersionData
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
     public static void DeserializeOnAppStat()
     {
-//#if !UNITY_EDITOR
+#if !UNITY_EDITOR
         DeserializeFromData();
-//#endif
+#else
+        PopulateFromGit();
+#endif
     }
 
     public static void DeserializeFromData()
