@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using UnityEngine;
  
-namespace Wokarol.Build
+namespace Build
 {
 
     /// <summary>

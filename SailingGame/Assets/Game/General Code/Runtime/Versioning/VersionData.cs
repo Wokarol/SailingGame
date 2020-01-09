@@ -69,8 +69,8 @@ public static class VersionData
     public static void PopulateFromGit()
     {
         data = new VersionDataHolder() {
-            Version = Wokarol.Build.Git.BuildVersion,
-            Hash = Wokarol.Build.Git.Hash
+            Version = Build.Git.BuildVersion,
+            Hash = Build.Git.Hash
         };
     }
 #endif
