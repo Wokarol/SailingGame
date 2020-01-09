@@ -5,13 +5,18 @@ using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 // Sets all files related to version when application is built
-public class VersionDataOnBuildInject : IPreprocessBuildWithReport
+public class VersionDataBuildProcessor : IPreprocessBuildWithReport, IPostprocessBuildWithReport
 {
     public int callbackOrder => 0;
 
     public void OnPreprocessBuild(BuildReport report)
     {
         VersionData.PopulateFromGit();
-        VersionData.SerializeTo(report.summary.outputPath);
+        VersionData.StoreInFile();
+    }
+
+    public void OnPostprocessBuild(BuildReport report)
+    {
+        VersionData.ClearFiles();
     }
 }
