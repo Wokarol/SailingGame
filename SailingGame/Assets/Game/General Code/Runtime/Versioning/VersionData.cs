@@ -1,10 +1,12 @@
 ﻿using System.IO;
 using UnityEngine;
 
-
 public static class VersionData
 {
     private const string FileName = "6420C686-A94E-4FE4-9354-1194A731931C";
+
+    private const string NoVersionPlaceholder = "__.__.__";
+    private const string NoHashPlaceholder = "b5ff5f2574a503452e32737a4d116aa16b0808f2";
 
     private readonly static string directory = Path.Combine(Application.dataPath, "Resources");
     private readonly static string path = Path.Combine(directory, $"{FileName}.txt");
@@ -22,8 +24,10 @@ public static class VersionData
     // variables and properties
     private static VersionDataHolder data;
 
-    public static string Version => data.Version;
-    public static string Hash => data.Hash;
+    private static bool CanReturnData => Application.isPlaying && data != null;
+
+    public static string Version => CanReturnData ? data.Version : NoVersionPlaceholder;
+    public static string Hash => CanReturnData ? data.Hash : NoHashPlaceholder;
 
     // Loads data or creates it when game starts
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
