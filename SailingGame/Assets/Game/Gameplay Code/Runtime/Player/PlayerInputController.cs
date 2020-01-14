@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Wokarol.Global;
 using Wokarol.Input;
 
 namespace Wokarol.Player
@@ -11,7 +12,6 @@ namespace Wokarol.Player
 		[SerializeField, Range(0, 0.5f)] private float directionDeadzone = 0.25f;
 
 		private PlayerActions actions;
-
 		private Vector2 direction;
 
 		private void Awake()
@@ -32,7 +32,11 @@ namespace Wokarol.Player
 
 		private void DirectionByPointer_performed(InputAction.CallbackContext ctx)
 		{
-			// TODO: Implements mouse direction
+			Camera camera = Game.World.MainCamera;
+			Vector2 v = ctx.ReadValue<Vector2>();
+
+			Vector2 worldPos = camera.ScreenToWorldPoint(new Vector3(v.x, v.y, -camera.transform.position.z));
+			direction = ((Vector3)worldPos - transform.position).normalized;
 		}
 
 		private void OnDrawGizmos()
