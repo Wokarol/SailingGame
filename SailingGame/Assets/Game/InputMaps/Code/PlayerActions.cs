@@ -22,17 +22,17 @@ namespace Wokarol.Input
             ""actions"": [
                 {
                     ""name"": ""Direction"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""361ac12b-4210-408b-b52b-b8aeea65fa48"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
                     ""name"": ""DirectionByPointer"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""9cec0931-2f3d-4ee0-bdce-fd37fb6d8a51"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
