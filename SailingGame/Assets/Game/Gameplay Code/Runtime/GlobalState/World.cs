@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace Wokarol.Global
 {
-    // This class does not adhere to Open-Closed Principle
+    // This class does not, and will not adhere to Open-Closed Principle
+    // It's the result of increased complexity that comes with non-directly typed references, it's not worth it now
 
     public class World
     {
