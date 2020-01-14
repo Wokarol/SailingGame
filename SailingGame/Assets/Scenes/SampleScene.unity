@@ -209,9 +209,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Game by Wokarol
 
-    <size=80%>CC0 Art by Kenney</size>
+    <size=70%>v__.__.__</size>
 
-    <size=70%>v__.__.__</size>'
+    <size=80%>CC0 Art by Kenney</size>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -317,9 +317,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pattern: 'Game by Wokarol
 
-    <size=80%>CC0 Art by Kenney</size>
+    <size=70%>v{v}</size>
 
-    <size=70%>v{v}</size>'
+    <size=80%>CC0 Art by Kenney</size>'
 --- !u!222 &268283287
 CanvasRenderer:
   m_ObjectHideFlags: 0
