@@ -15,5 +15,10 @@ namespace Wokarol.Player
             if (motor == null) motor = GetComponent<ShipMotor>();
             if (input == null) input = GetComponent<PlayerInputController>();
         }
+
+        private void Update()
+        {
+            motor.Direction = input.Direction;
+        }
     }
 }

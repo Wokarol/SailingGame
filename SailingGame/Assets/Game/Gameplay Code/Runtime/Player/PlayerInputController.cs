@@ -12,7 +12,7 @@ namespace Wokarol.Player
 		[SerializeField, Range(0, 0.5f)] private float directionDeadzone = 0.25f;
 
 		private PlayerActions actions;
-		private Vector2 direction;
+		public Vector2 Direction { get; private set; }
 
 		private void Awake()
 		{
@@ -27,7 +27,7 @@ namespace Wokarol.Player
 		{
 			Vector2 v = ctx.ReadValue<Vector2>();
 			if(v.sqrMagnitude > directionDeadzone * directionDeadzone)
-				direction = v.normalized;
+				Direction = v.normalized;
 		}
 
 		private void DirectionByPointer_performed(InputAction.CallbackContext ctx)
@@ -36,7 +36,7 @@ namespace Wokarol.Player
 			Vector2 v = ctx.ReadValue<Vector2>();
 
 			Vector2 worldPos = camera.ScreenToWorldPoint(new Vector3(v.x, v.y, -camera.transform.position.z));
-			direction = ((Vector3)worldPos - transform.position).normalized;
+			Direction = ((Vector3)worldPos - transform.position).normalized;
 		}
 
 		private void OnDrawGizmos()
@@ -44,8 +44,8 @@ namespace Wokarol.Player
 			if (!Application.isPlaying)
 				return;
 
-			Gizmos.DrawRay(transform.position, direction * 2);
-			Gizmos.DrawWireSphere((Vector2)transform.position + direction * 2, 0.1f);
+			Gizmos.DrawRay(transform.position, Direction * 2);
+			Gizmos.DrawWireSphere((Vector2)transform.position + Direction * 2, 0.1f);
 		}
 	} 
 }
