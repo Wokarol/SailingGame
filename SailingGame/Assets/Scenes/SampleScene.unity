@@ -211,7 +211,8 @@ MonoBehaviour:
 
     <size=70%>v__.__.__</size>
 
-    <size=80%>CC0 Art by Kenney</size>'
+    <size=80%>CC0 Art
+    by Kenney</size>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -319,7 +320,8 @@ MonoBehaviour:
 
     <size=70%>v{v}</size>
 
-    <size=80%>CC0 Art by Kenney</size>'
+    <size=80%>CC0 Art by
+    Kenney</size>'
 --- !u!222 &268283287
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -839,6 +841,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1921697400}
+  - component: {fileID: 1921697403}
+  - component: {fileID: 1921697402}
+  - component: {fileID: 1921697401}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -861,6 +866,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1921697401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921697399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5bc3cab5afdb748929463901cb7758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 1921697403}
+  motor: {fileID: 1921697402}
+--- !u!114 &1921697402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921697399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 567a730df44054649aea2a6af632ad7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1921697403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921697399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b15fe8fce375734b9ac09e8ce39077e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1981132628
 GameObject:
   m_ObjectHideFlags: 0
