@@ -857,6 +857,7 @@ GameObject:
   - component: {fileID: 1921697403}
   - component: {fileID: 1921697401}
   - component: {fileID: 1921697402}
+  - component: {fileID: 1921697404}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -905,6 +906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567a730df44054649aea2a6af632ad7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxVelocity: 5
 --- !u!114 &1921697403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,6 +920,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionDeadzone: 0.25
+--- !u!50 &1921697404
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921697399}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 100
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1981132628
 GameObject:
   m_ObjectHideFlags: 0
