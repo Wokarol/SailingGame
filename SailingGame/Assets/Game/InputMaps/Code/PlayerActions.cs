@@ -35,6 +35,14 @@ namespace Wokarol.Input
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SailPower"",
+                    ""type"": ""Button"",
+                    ""id"": ""33971513-7a97-4169-831a-bfba222d1f0a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -57,6 +65,28 @@ namespace Wokarol.Input
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""DirectionByPointer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33cf6c3e-5186-417f-bf0c-cf3703f6870e"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SailPower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a772d4f-f0c1-4c28-87b9-6bae6fa45ac7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""SailPower"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -97,6 +127,7 @@ namespace Wokarol.Input
             m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
             m_Main_Direction = m_Main.FindAction("Direction", throwIfNotFound: true);
             m_Main_DirectionByPointer = m_Main.FindAction("DirectionByPointer", throwIfNotFound: true);
+            m_Main_SailPower = m_Main.FindAction("SailPower", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -148,12 +179,14 @@ namespace Wokarol.Input
         private IMainActions m_MainActionsCallbackInterface;
         private readonly InputAction m_Main_Direction;
         private readonly InputAction m_Main_DirectionByPointer;
+        private readonly InputAction m_Main_SailPower;
         public struct MainActions
         {
             private @PlayerActions m_Wrapper;
             public MainActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Direction => m_Wrapper.m_Main_Direction;
             public InputAction @DirectionByPointer => m_Wrapper.m_Main_DirectionByPointer;
+            public InputAction @SailPower => m_Wrapper.m_Main_SailPower;
             public InputActionMap Get() { return m_Wrapper.m_Main; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -169,6 +202,9 @@ namespace Wokarol.Input
                     @DirectionByPointer.started -= m_Wrapper.m_MainActionsCallbackInterface.OnDirectionByPointer;
                     @DirectionByPointer.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnDirectionByPointer;
                     @DirectionByPointer.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnDirectionByPointer;
+                    @SailPower.started -= m_Wrapper.m_MainActionsCallbackInterface.OnSailPower;
+                    @SailPower.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnSailPower;
+                    @SailPower.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnSailPower;
                 }
                 m_Wrapper.m_MainActionsCallbackInterface = instance;
                 if (instance != null)
@@ -179,6 +215,9 @@ namespace Wokarol.Input
                     @DirectionByPointer.started += instance.OnDirectionByPointer;
                     @DirectionByPointer.performed += instance.OnDirectionByPointer;
                     @DirectionByPointer.canceled += instance.OnDirectionByPointer;
+                    @SailPower.started += instance.OnSailPower;
+                    @SailPower.performed += instance.OnSailPower;
+                    @SailPower.canceled += instance.OnSailPower;
                 }
             }
         }
@@ -205,6 +244,7 @@ namespace Wokarol.Input
         {
             void OnDirection(InputAction.CallbackContext context);
             void OnDirectionByPointer(InputAction.CallbackContext context);
+            void OnSailPower(InputAction.CallbackContext context);
         }
     }
 }

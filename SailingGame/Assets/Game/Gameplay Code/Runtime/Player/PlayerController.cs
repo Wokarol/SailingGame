@@ -14,11 +14,14 @@ namespace Wokarol.Player
         {
             if (motor == null) motor = GetComponent<ShipMotor>();
             if (input == null) input = GetComponent<PlayerInputController>();
+
+            if (Application.isPlaying)
+                Awake();
         }
 
-        private void Update()
+        private void Awake()
         {
-            motor.Direction = input.Direction;
+            motor.Input = input;
         }
     }
 }
