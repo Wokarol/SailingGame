@@ -31,7 +31,7 @@ namespace Wokarol.Player
 		private void Direction_performed(InputAction.CallbackContext ctx)
 		{
 			Vector2 v = ctx.ReadValue<Vector2>();
-			if (v.sqrMagnitude > directionDeadzone * directionDeadzone)
+			if (v.sqrMagnitude > (directionDeadzone * directionDeadzone))
 				Direction = v.normalized;
 		}
 

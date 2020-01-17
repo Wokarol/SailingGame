@@ -906,7 +906,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567a730df44054649aea2a6af632ad7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxVelocity: 5
+  MaxVelocity: 3
+  AccelerationSpeed: 0.5
+  DecelerationSpeed: 2
+  RotationSpeed: 90
+  velocityToRotationSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.25
+      inSlope: -5
+      outSlope: 0.75
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.9383155
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.75
+      outSlope: 0.75
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1921697403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,7 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b15fe8fce375734b9ac09e8ce39077e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionDeadzone: 0.25
+  directionDeadzone: 0.4
 --- !u!50 &1921697404
 Rigidbody2D:
   serializedVersion: 4
