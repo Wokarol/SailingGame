@@ -38,7 +38,7 @@ namespace Wokarol.Input
                 },
                 {
                     ""name"": ""SailPower"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""33971513-7a97-4169-831a-bfba222d1f0a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
