@@ -17,6 +17,9 @@ namespace Wokarol.Player
 
 		private PlayerActions actions;
 
+		private bool isUsingPointerDevice;
+		private Vector2 worldPointerPos;
+
 		private void Awake()
 		{
 			actions = new PlayerActions();
@@ -28,11 +31,20 @@ namespace Wokarol.Player
 			actions.Main.SailPower.performed += SailPower_performed;
 		}
 
+		private void Update()
+		{
+			if (isUsingPointerDevice) {
+				Direction = ((Vector3)worldPointerPos - transform.position).normalized;
+			}
+		}
+
 		private void Direction_performed(InputAction.CallbackContext ctx)
 		{
 			Vector2 v = ctx.ReadValue<Vector2>();
-			if (v.sqrMagnitude > (directionDeadzone * directionDeadzone))
+			if (v.sqrMagnitude > (directionDeadzone * directionDeadzone)) {
 				Direction = v.normalized;
+				isUsingPointerDevice = false;
+			}
 		}
 
 		private void DirectionByPointer_performed(InputAction.CallbackContext ctx)
@@ -40,8 +52,8 @@ namespace Wokarol.Player
 			Camera camera = Game.World.MainCamera;
 			Vector2 v = ctx.ReadValue<Vector2>();
 
-			Vector2 worldPos = camera.ScreenToWorldPoint(new Vector3(v.x, v.y, -camera.transform.position.z));
-			Direction = ((Vector3)worldPos - transform.position).normalized;
+			worldPointerPos = camera.ScreenToWorldPoint(new Vector3(v.x, v.y, -camera.transform.position.z));
+			isUsingPointerDevice = true;
 		}
 
 		private void SailPower_performed(InputAction.CallbackContext ctx)
