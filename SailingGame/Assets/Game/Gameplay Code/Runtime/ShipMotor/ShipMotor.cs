@@ -26,6 +26,7 @@ namespace Wokarol.Ship
 		private void Awake()
 		{
 			body = GetComponent<Rigidbody2D>();
+			if (!body) Debug.LogError($"No Rigidbody2D found on {nameof(ShipMotor)}!", this);
 		}
 
 		private void Update()
@@ -43,8 +44,12 @@ namespace Wokarol.Ship
 			velocity = Mathf.MoveTowards(velocity, targetVelocity, velocityChangeSpeed * Time.deltaTime);
 
 			// Uses calculated data to move ship via rigidbody
-			transform.rotation = rotation;
-			body.velocity = -transform.up * velocity;
+			if (body) {
+				transform.rotation = rotation;
+				body.velocity = -transform.up * velocity; 
+			} else {
+				Debug.LogError($"Rigidbody is null on {nameof(ShipMotor)}", this);
+			}
 		}
 	}
 }
