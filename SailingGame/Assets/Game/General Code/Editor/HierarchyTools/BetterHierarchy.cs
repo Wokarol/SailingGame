@@ -21,7 +21,7 @@ public static class BetterHierarchy
     {
         EditorApplication.hierarchyWindowItemOnGUI = DrawItem;
         foreach (var (type, icon) in bindings) {
-            textureCache.Add(type, 
+            textureCache.Add(type,
                 EditorGUIUtility.IconContent(icon).image);
         }
     }
@@ -31,57 +31,73 @@ public static class BetterHierarchy
         // Get's object for given item
         GameObject go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
 
-        if(go != null) {
+        if (go != null) {
+            bool isHeader = go.name.StartsWith("---");
 
-            if (go.name.StartsWith("---")) {
-                // Creating highlight rect and style
-                Rect highlightRect = new Rect(rect);
-                highlightRect.width -= highlightRect.height;
-
-                GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
-                labelStyle.fontStyle = FontStyle.Bold;
-                labelStyle.alignment = TextAnchor.MiddleCenter;
-                labelStyle.fontSize -= 1;
-                highlightRect.height -= 1;
-                highlightRect.y += 1;
-
-                // Drawing background
-                EditorGUI.DrawRect(highlightRect, Color.grey);
-
-                // Offseting text
-                highlightRect.height -= 2;
-                highlightRect.y += 1;
-
-                // Drawing label
-                EditorGUI.LabelField(highlightRect, go.name.Replace("---", "").ToUpperInvariant(), labelStyle);
+            if (isHeader) {
+                DrawHeader(rect, go);
             }
-
-            // Get's style of toggle
-            GUIStyle toggleStyle = toggleStyleName;
-
-            // Sets rect for toggle
-            var toggleRect = new Rect(rect);
-            toggleRect.width = toggleRect.height;
-            toggleRect.x -= 28;
-
-            // Creates toggle
-            bool state = GUI.Toggle(toggleRect, go.activeSelf, GUIContent.none, toggleStyle);
-
-            // Draws icon for each binded component type
-            int i = 0;
-            foreach (var (type, _) in bindings) {
-                if (go.GetComponent(type) != null) {
-                    GUI.DrawTexture(GetRightRectWithOffset(rect, i), textureCache[type]);
-                    i++;
-                }
+            if (!isHeader || go.transform.childCount > 0) {
+                DrawActivityToggle(rect, go);
             }
+            DrawComponentIcons(rect, go);
+        }
+    }
 
-            // Sets game's active state to result of toggle
-            if (state != go.activeSelf) {
-                Undo.RecordObject(go, $"{(state ? "Enabled" : "Disabled")}");
-                go.SetActive(state);
-                Undo.FlushUndoRecordObjects();
+    private static void DrawHeader(Rect rect, GameObject go)
+    {
+        // Creating highlight rect and style
+        Rect highlightRect = new Rect(rect);
+        highlightRect.width -= highlightRect.height;
+
+        GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+        labelStyle.fontStyle = FontStyle.Bold;
+        labelStyle.alignment = TextAnchor.MiddleCenter;
+        labelStyle.fontSize -= 1;
+        highlightRect.height -= 1;
+        highlightRect.y += 1;
+
+        // Drawing background
+        EditorGUI.DrawRect(highlightRect, Color.grey);
+
+        // Offseting text
+        highlightRect.height -= 2;
+        highlightRect.y += 1;
+
+        // Drawing label
+        EditorGUI.LabelField(highlightRect, go.name.Replace("---", "").ToUpperInvariant(), labelStyle);
+    }
+
+    private static void DrawComponentIcons(Rect rect, GameObject go)
+    {
+        // Draws icon for each binded component type
+        int i = 0;
+        foreach (var (type, _) in bindings) {
+            if (go.GetComponent(type) != null) {
+                GUI.DrawTexture(GetRightRectWithOffset(rect, i), textureCache[type]);
+                i++;
             }
+        }
+    }
+
+    private static void DrawActivityToggle(Rect rect, GameObject go)
+    {
+        // Get's style of toggle
+        GUIStyle toggleStyle = toggleStyleName;
+
+        // Sets rect for toggle
+        var toggleRect = new Rect(rect);
+        toggleRect.width = toggleRect.height;
+        toggleRect.x -= 28;
+
+        // Creates toggle
+        bool state = GUI.Toggle(toggleRect, go.activeSelf, GUIContent.none, toggleStyle);
+
+        // Sets game's active state to result of toggle
+        if (state != go.activeSelf) {
+            Undo.RecordObject(go, $"{(state ? "Enabled" : "Disabled")}");
+            go.SetActive(state);
+            Undo.FlushUndoRecordObjects();
         }
     }
 
