@@ -11,7 +11,7 @@ public static class BetterHierarchy
     // Bindings for all icons on right
     private static readonly (Type type, string icon)[] bindings = new (Type, string)[] {
         (typeof(MonoBehaviour), "cs Script Icon"),
-        (typeof(Camera), "Camera Gizmo"),
+        (typeof(Camera), ""),
         (typeof(TMPro.TextMeshProUGUI), "")
     };
 
