@@ -21,7 +21,8 @@ public static class BetterHierarchy
     static BetterHierarchy()
     {
         EditorApplication.hierarchyWindowItemOnGUI = DrawItem;
-        foreach (var (type, icon) in bindings) {
+        foreach (var (type, icon) in bindings)
+        {
             if (string.IsNullOrEmpty(icon))
                 continue;
 
@@ -35,13 +36,16 @@ public static class BetterHierarchy
         // Get's object for given item
         GameObject go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
 
-        if (go != null) {
+        if (go != null)
+        {
             bool isHeader = go.name.StartsWith("---");
 
-            if (isHeader) {
+            if (isHeader)
+            {
                 DrawHeader(rect, go);
             }
-            if (!isHeader || go.transform.childCount > 0) {
+            if (!isHeader || go.transform.childCount > 0)
+            {
                 DrawActivityToggle(rect, go);
             }
             DrawComponentIcons(rect, go);
@@ -76,12 +80,17 @@ public static class BetterHierarchy
     {
         // Draws icon for each binded component type
         int i = 0;
-        foreach (var (type, textureName) in bindings) {
+        foreach (var (type, textureName) in bindings)
+        {
             Component component = go.GetComponent(type);
-            if (component != null) {
-                if(!string.IsNullOrEmpty(textureName)) {
+            if (component != null)
+            {
+                if (!string.IsNullOrEmpty(textureName))
+                {
                     GUI.DrawTexture(GetRightRectWithOffset(rect, i), textureCache[textureName]);
-                } else {
+                }
+                else
+                {
                     var texture = EditorGUIUtility.ObjectContent(component, type).image;
                     GUI.DrawTexture(GetRightRectWithOffset(rect, i), texture);
                 }
@@ -105,7 +114,8 @@ public static class BetterHierarchy
         bool state = GUI.Toggle(toggleRect, go.activeSelf, GUIContent.none, toggleStyle);
 
         // Sets game's active state to result of toggle
-        if (state != go.activeSelf) {
+        if (state != go.activeSelf)
+        {
             Undo.RecordObject(go, $"{(state ? "Enabled" : "Disabled")}");
             go.SetActive(state);
             Undo.FlushUndoRecordObjects();
