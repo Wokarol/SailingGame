@@ -11,18 +11,22 @@ public static class BetterHierarchy
     // Bindings for all icons on right
     private static readonly (Type type, string icon)[] bindings = new (Type, string)[] {
         (typeof(MonoBehaviour), "cs Script Icon"),
-        (typeof(Camera), "Camera Gizmo")
+        (typeof(Camera), "Camera Gizmo"),
+        (typeof(TMPro.TextMeshProUGUI), "")
     };
 
     // Cache for all icon textures
-    private static readonly Dictionary<Type, Texture> textureCache = new Dictionary<Type, Texture>();
+    private static readonly Dictionary<string, Texture> textureCache = new Dictionary<string, Texture>();
 
     static BetterHierarchy()
     {
         EditorApplication.hierarchyWindowItemOnGUI = DrawItem;
         foreach (var (type, icon) in bindings) {
-            textureCache.Add(type,
-                EditorGUIUtility.IconContent(icon).image);
+            if (string.IsNullOrEmpty(icon))
+                continue;
+
+            Texture image = EditorGUIUtility.IconContent(icon).image;
+            textureCache.Add(icon, image);
         }
     }
 
@@ -72,9 +76,16 @@ public static class BetterHierarchy
     {
         // Draws icon for each binded component type
         int i = 0;
-        foreach (var (type, _) in bindings) {
-            if (go.GetComponent(type) != null) {
-                GUI.DrawTexture(GetRightRectWithOffset(rect, i), textureCache[type]);
+        foreach (var (type, textureName) in bindings) {
+            Component component = go.GetComponent(type);
+            if (component != null) {
+                if(!string.IsNullOrEmpty(textureName)) {
+                    GUI.DrawTexture(GetRightRectWithOffset(rect, i), textureCache[textureName]);
+                } else {
+                    var texture = EditorGUIUtility.ObjectContent(component, type).image;
+                    GUI.DrawTexture(GetRightRectWithOffset(rect, i), texture);
+                }
+
                 i++;
             }
         }
