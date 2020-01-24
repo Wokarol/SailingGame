@@ -7,6 +7,10 @@ using UnityEngine;
 public static class BetterHierarchy
 {
     private const string toggleStyleName = "OL Toggle";
+    private const string mixedToggleStyleName = "OL ToggleMixed";
+
+    private static bool includeNotImportant = true;
+    private const string includeNotImportantPrefsKey = "{E0EF3D35-59F0-4531-8040-7341E3093C84}";
 
     // ===============================================================================================
 
@@ -19,8 +23,7 @@ public static class BetterHierarchy
         typeof(Camera),
         typeof(Rigidbody2D),
         typeof(Rigidbody),
-        typeof(TMPro.TextMeshProUGUI),
-        typeof(TMPro.TextMeshPro),
+        typeof(TMPro.TMP_Text),
         typeof(Collider),
         typeof(Collider2D),
         typeof(Renderer),
@@ -39,6 +42,15 @@ public static class BetterHierarchy
     static BetterHierarchy()
     {
         EditorApplication.hierarchyWindowItemOnGUI = DrawItem;
+        includeNotImportant = EditorPrefs.GetBool(includeNotImportantPrefsKey);
+    }
+
+    [MenuItem("Tools/BetterHierarchy/Toggle Non-Important")]
+    public static void ToggleNonImportant()
+    {
+        includeNotImportant = !includeNotImportant;
+        EditorPrefs.SetBool(includeNotImportantPrefsKey, includeNotImportant);
+        EditorApplication.RepaintHierarchyWindow();
     }
 
     static void DrawItem(int instanceID, Rect rect)
@@ -101,6 +113,9 @@ public static class BetterHierarchy
             Texture texture = GetIconFor(component, type);
             bool important = CheckTypeResursive(type, importantList);
 
+            if (!includeNotImportant && !important)
+                continue;
+
             if (usedIcons.TryGetValue(texture, out int index))
             {
                 var icon = iconsToDraw[index];
@@ -145,7 +160,11 @@ public static class BetterHierarchy
     private static void DrawActivityToggle(Rect rect, GameObject go)
     {
         // Get's style of toggle
-        GUIStyle toggleStyle = toggleStyleName;
+        bool active = go.activeInHierarchy;
+
+        GUIStyle toggleStyle = active
+            ? toggleStyleName
+            : mixedToggleStyleName;
 
         // Sets rect for toggle
         var toggleRect = new Rect(rect);
