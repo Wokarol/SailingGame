@@ -8,27 +8,33 @@ public static class BetterHierarchy
 {
     private const string toggleStyleName = "OL Toggle";
 
-    // Bindings for all icons on right
-    private static readonly (Type type, string icon)[] bindings = new (Type, string)[] {
-        (typeof(MonoBehaviour), "cs Script Icon"),
-        (typeof(Camera), ""),
-        (typeof(TMPro.TextMeshProUGUI), "")
+    // ===============================================================================================
+
+    private static readonly Dictionary<Type, string> iconOverrides = new Dictionary<Type, string>
+    {
     };
 
-    // Cache for all icon textures
-    private static readonly Dictionary<string, Texture> textureCache = new Dictionary<string, Texture>();
+    private static readonly HashSet<Type> importantList = new HashSet<Type>
+    {
+        typeof(Camera),
+        typeof(Rigidbody2D),
+        typeof(Rigidbody),
+        typeof(TMPro.TextMeshProUGUI),
+        typeof(TMPro.TextMeshPro)
+    };
+
+    private static readonly HashSet<Type> blacklist = new HashSet<Type>
+    {
+        typeof(Transform),
+        typeof(RectTransform)
+    };
+
+
+    // ===============================================================================================
 
     static BetterHierarchy()
     {
         EditorApplication.hierarchyWindowItemOnGUI = DrawItem;
-        foreach (var (type, icon) in bindings)
-        {
-            if (string.IsNullOrEmpty(icon))
-                continue;
-
-            Texture image = EditorGUIUtility.IconContent(icon).image;
-            textureCache.Add(icon, image);
-        }
     }
 
     static void DrawItem(int instanceID, Rect rect)
@@ -78,26 +84,47 @@ public static class BetterHierarchy
 
     private static void DrawComponentIcons(Rect rect, GameObject go)
     {
-        // Draws icon for each binded component type
-        int i = 0;
-        foreach (var (type, textureName) in bindings)
-        {
-            Component component = go.GetComponent(type);
-            if (component != null)
-            {
-                if (!string.IsNullOrEmpty(textureName))
-                {
-                    GUI.DrawTexture(GetRightRectWithOffset(rect, i), textureCache[textureName]);
-                }
-                else
-                {
-                    var texture = EditorGUIUtility.ObjectContent(component, type).image;
-                    GUI.DrawTexture(GetRightRectWithOffset(rect, i), texture);
-                }
+        Dictionary<Texture, int> usedIcons = new Dictionary<Texture, int>();
+        List<(Texture texture, bool important)> iconsToDraw = new List<(Texture icon, bool important)>();
 
-                i++;
+        foreach (var component in go.GetComponents<Component>())
+        {
+            Type type = component.GetType();
+
+            if (blacklist.Contains(type))
+                continue;
+
+            Texture texture = GetIconFor(component, type);
+            bool important = importantList.Contains(type);
+
+            if (usedIcons.TryGetValue(texture, out int index))
+            {
+                var icon = iconsToDraw[index];
+                icon.important |= important;
+                iconsToDraw[index] = icon;
+            }
+            else
+            {
+                iconsToDraw.Add((texture, important));
+                usedIcons.Add(texture, iconsToDraw.Count - 1);
             }
         }
+
+        for (int i = 0; i < iconsToDraw.Count; i++)
+        {
+            (Texture texture, bool important) = iconsToDraw[i];
+            Color tint = important
+                ? new Color(1, 1, 1, 1)
+                : new Color(0.8f, 0.8f, 0.8f, 0.25f);
+            GUI.DrawTexture(GetRightRectWithOffset(rect, i), texture, ScaleMode.ScaleToFit, true, 0, tint, 0, 0);
+        }
+    }
+
+    private static Texture GetIconFor(Component c, Type type)
+    {
+        return iconOverrides.TryGetValue(type, out string icon)
+            ? EditorGUIUtility.IconContent(icon).image
+            : EditorGUIUtility.ObjectContent(c, type).image;
     }
 
     private static void DrawActivityToggle(Rect rect, GameObject go)
