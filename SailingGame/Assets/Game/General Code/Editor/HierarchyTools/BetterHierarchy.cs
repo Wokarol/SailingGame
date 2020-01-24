@@ -111,7 +111,7 @@ public static class BetterHierarchy
                 continue;
 
             Texture texture = GetIconFor(component, type);
-            bool important = CheckTypeResursive(type, importantList);
+            bool important = CheckTypeRecursive(type, importantList);
 
             if (!includeNotImportant && !important)
                 continue;
@@ -139,7 +139,7 @@ public static class BetterHierarchy
         }
     }
 
-    private static bool CheckTypeResursive(Type t, HashSet<Type> set)
+    private static bool CheckTypeRecursive(Type t, HashSet<Type> set)
     {
         if (set.Contains(t))
             return true;
@@ -147,7 +147,7 @@ public static class BetterHierarchy
         if (t.BaseType == null)
             return false;
 
-        return CheckTypeResursive(t.BaseType, set);
+        return CheckTypeRecursive(t.BaseType, set);
     }
 
     private static Texture GetIconFor(Component c, Type type)
