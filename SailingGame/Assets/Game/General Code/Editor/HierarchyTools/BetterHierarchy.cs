@@ -20,7 +20,11 @@ public static class BetterHierarchy
         typeof(Rigidbody2D),
         typeof(Rigidbody),
         typeof(TMPro.TextMeshProUGUI),
-        typeof(TMPro.TextMeshPro)
+        typeof(TMPro.TextMeshPro),
+        typeof(Collider),
+        typeof(Collider2D),
+        typeof(Renderer),
+        typeof(CanvasRenderer)
     };
 
     private static readonly HashSet<Type> blacklist = new HashSet<Type>
@@ -95,7 +99,7 @@ public static class BetterHierarchy
                 continue;
 
             Texture texture = GetIconFor(component, type);
-            bool important = importantList.Contains(type);
+            bool important = CheckTypeResursive(type, importantList);
 
             if (usedIcons.TryGetValue(texture, out int index))
             {
@@ -118,6 +122,17 @@ public static class BetterHierarchy
                 : new Color(0.8f, 0.8f, 0.8f, 0.25f);
             GUI.DrawTexture(GetRightRectWithOffset(rect, i), texture, ScaleMode.ScaleToFit, true, 0, tint, 0, 0);
         }
+    }
+
+    private static bool CheckTypeResursive(Type t, HashSet<Type> set)
+    {
+        if (set.Contains(t))
+            return true;
+
+        if (t.BaseType == null)
+            return false;
+
+        return CheckTypeResursive(t.BaseType, set);
     }
 
     private static Texture GetIconFor(Component c, Type type)
