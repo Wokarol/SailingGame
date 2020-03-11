@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Effects Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 514df91240ba9fb4ba8a5b1cd9dc9ac2, type: 3}
+    totalSpriteSurfaceArea: 11811
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: a82219c9d8f65649fc8dad4a3ab5d21f
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 897c1c904b475e341913f010f0f29efe, type: 3}
+  - {fileID: 21300000, guid: 3c6232221ab77444780a6d1274559cea, type: 3}
+  - {fileID: 21300000, guid: df561a83ad54d2a4194777e5fd0fd763, type: 3}
+  - {fileID: 21300000, guid: de0cf4d4853df6c449a9ac1ddfe4aaff, type: 3}
+  - {fileID: 21300000, guid: 00ebb0c53c1073749a77abb2d489ece9, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - explosion2
+  - explosion3
+  - fire2
+  - explosion1
+  - fire1
+  m_Tag: Effects Atlas
+  m_IsVariant: 0

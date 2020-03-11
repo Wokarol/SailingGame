@@ -88,11 +88,17 @@ public static class BetterHierarchy
         highlightRect.y += 1;
 
         // Drawing background
-        EditorGUI.DrawRect(highlightRect, Color.grey);
+        ColorUtility.TryParseHtmlString("#AAAAAA", out Color headerColor);
+
+        var headerRect = new Rect(highlightRect);
+        headerRect.y -= 1;
+        headerRect.xMin -= 28;
+        headerRect.xMax += 28;
+
+        EditorGUI.DrawRect(headerRect, headerColor);
 
         // Offseting text
         highlightRect.height -= 2;
-        highlightRect.y += 1;
 
         // Drawing label
         EditorGUI.LabelField(highlightRect, go.name.Replace("---", "").ToUpperInvariant(), labelStyle);
@@ -187,7 +193,7 @@ public static class BetterHierarchy
     {
         var newRect = new Rect(rect);
         newRect.width = newRect.height;
-        newRect.x = rect.x + rect.width - (rect.height * offset) - 8;
+        newRect.x = rect.x + rect.width - (rect.height * offset) - 16;
         return newRect;
     }
 }
